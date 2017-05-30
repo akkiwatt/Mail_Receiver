@@ -1,0 +1,42 @@
+Please Follow follwoing steps to launch this Django application on your Server :
+
+Step 0: please install below mentioned Python libraries before starting with application .
+	
+	Django==1.11.1
+        MySQL-python==1.2.5
+        watchdog==0.8.3
+	
+
+
+Step 1: In mail_receiver folder you will find settings.py file. In that file you have to edit your own Mysql databse Information. Such as:
+	
+    DATABASES = {
+    	'default': {
+        	'ENGINE': 'django.db.backends.mysql',
+        	'NAME': 'database_name',
+		'USER':'root',
+		'PASSWORD':'password',
+		'HOST':'localhost',
+		'PORT':'3306'
+    		}
+	}
+
+Step 2: come back to directory where manage.py file is present in mail_receiver folder. from there execute following command to create migration of changes made.
+
+	python  manage.py makemigrations
+
+Step 3: Now migrate all changes to Database by using following command.you can verify the same by checking table in your mentioned database.there will be new table named mail_parse_email_info.
+	
+	python manage.py migrate
+
+Step 4: Now all migrations are made . it is time to execute code for testing . do that by using following command:
+
+	python manage.py shell < watch_file_and_parse.py
+
+Step 5 : Now your  process is running ,you can test by adding new email_raw data file in /tmp directory.data from that file will be stored in Mysql Databse in above mentioned table name .
+
+step 6 : Run process in Background. we can execute process in background by using below mentioned command :
+
+	nohup python manage.py shell < watch_file_and_parse.py &
+
+        now process will run in background .
